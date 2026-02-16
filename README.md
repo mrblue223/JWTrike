@@ -2,30 +2,18 @@
 
 JWTrike is a comprehensive Python-based security suite designed for the end-to-end manipulation, auditing, and exploitation of JSON Web Tokens (JWT) and JSON Web Encryption (JWE). It provides a modular framework for security researchers to identify misconfigurations and test the robustness of token-based authentication systems.
 # 🚀 Features
-
-    Token Management: Encode, decode, and verify JWT/JWE tokens with support for HS, RS, ES, and PS algorithm families.
-
-    Security Auditing:
-
-        Automated Scanner: Detects none algorithm support, weak HMAC secrets, expired tokens, and header injections.
-
-        Secret Cracker: High-speed dictionary and brute-force attacks to recover signing secrets.
-
-    Attack Payload Generator: Creates specialized tokens for:
-
-        Algorithm Confusion (Asymmetric to Symmetric).
-
-        KID SQL Injection & Path Traversal.
-
-        JKU / X5U SSRF & Key Substitution.
-
-        XSS via cty header.
-
-    Integration Ready:
-
-        REST API: Integrated Flask server for remote access and automation.
-
-        MCP Server: Model Context Protocol support for LLM/AI agent integration.
+- Token Management: Encode, decode, and verify JWT/JWE tokens with support for HS, RS, ES, and PS algorithm families.
+- Security Auditing:
+    - Automated Scanner: Detects none algorithm support, weak HMAC secrets, expired tokens, and header injections.
+    - Secret Cracker: High-speed dictionary and brute-force attacks to recover signing secrets.
+    - Attack Payload Generator: Creates specialized tokens for:
+        - Algorithm Confusion (Asymmetric to Symmetric).
+        - KID SQL Injection & Path Traversal.
+        - JKU / X5U SSRF & Key Substitution.
+        - XSS via cty header.
+- Integration Ready:
+    - REST API: Integrated Flask server for remote access and automation.
+    - MCP Server: Model Context Protocol support for LLM/AI agent integration.
 
 # 🛠️ Installation
 
