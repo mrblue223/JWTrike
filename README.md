@@ -1,5 +1,11 @@
 # JWTrike: JWT/JWE Security and Stress Testing Framework
 
+![Version](https://img.shields.io/badge/version-1.0.0-blue)
+![Python](https://img.shields.io/badge/python-3.8%2B-brightgreen)
+![License](https://img.shields.io/badge/license-MIT-red)
+![Security](https://img.shields.io/badge/focus-penetration%20testing-lightgrey)
+![Environment](https://img.shields.io/badge/environment-remote%20ready-blueviolet)
+
 JWTrike is a modular security suite designed for the end-to-end manipulation, auditing, and exploitation of JSON Web Tokens (JWT) and JSON Web Encryption (JWE). It provides a structured framework for security researchers to identify misconfigurations and assess the resilience of token-based authentication systems.
 
 ## Core Features
