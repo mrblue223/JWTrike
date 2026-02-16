@@ -1,77 +1,108 @@
-# JWTrike: JWT/JWE Security & Stress Testing Tool
+# JWTrike: JWT/JWE Security and Stress Testing Framework
 
-JWTrike is a comprehensive Python-based security suite designed for the end-to-end manipulation, auditing, and exploitation of JSON Web Tokens (JWT) and JSON Web Encryption (JWE). It provides a modular framework for security researchers to identify misconfigurations and test the robustness of token-based authentication systems.
-# 🚀 Features
-- Token Management: Encode, decode, and verify JWT/JWE tokens with support for HS, RS, ES, and PS algorithm families.
-- Security Auditing:
-    - Automated Scanner: Detects none algorithm support, weak HMAC secrets, expired tokens, and header injections.
-    - Secret Cracker: High-speed dictionary and brute-force attacks to recover signing secrets.
-    - Attack Payload Generator: Creates specialized tokens for:
-        - Algorithm Confusion (Asymmetric to Symmetric).
-        - KID SQL Injection & Path Traversal.
-        - JKU / X5U SSRF & Key Substitution.
-        - XSS via cty header.
-- Integration Ready:
-    - REST API: Integrated Flask server for remote access and automation.
-    - MCP Server: Model Context Protocol support for LLM/AI agent integration.
+JWTrike is a modular security suite designed for the end-to-end manipulation, auditing, and exploitation of JSON Web Tokens (JWT) and JSON Web Encryption (JWE). It provides a structured framework for security researchers to identify misconfigurations and assess the resilience of token-based authentication systems.
 
-# 🛠️ Installation
+## Core Features
 
-    Clone the repository: git clone https://github.com/yourusername/JWTrike.git cd JWTrike
+- Protocol Support: Support for HS, RS, ES, and PS algorithm families.
+- Vulnerability Scanning: Automated detection of "none" algorithm support, weak HMAC secrets, and header injections.
+- Cryptographic Auditing: High-speed dictionary and brute-force attacks to recover signing secrets.
+- Exploit Generation: Specialized payload creation for Algorithm Confusion, KID SQL Injection, Path Traversal, and SSRF (JKU/X5U).
+- Integration: Native Flask-based REST API and Model Context Protocol (MCP) server for AI-agent integration.
 
-    Run the setup script: The setup.sh script automates the creation of a virtual environment and installs all necessary dependencies. chmod +x setup.sh ./setup.sh
+## Technical Architecture
 
-    Activate the environment: source jwt-env/bin/activate
+The framework is built with a decoupled architecture to ensure extensibility:
 
-# 📖 Usage Guide
+- core/encoder.py: Handles token serialization and signing.
+- core/decoder.py: Manages deserialization and signature verification logic.
+- core/scanner.py: The heuristic engine for vulnerability identification.
+- core/cracker.py: Optimized multi-threaded secret recovery module.
+- core/mcp_server.py: Implementation of the Model Context Protocol for LLM interoperability.
 
-JWTrike uses a sub-command structure via main.py.
-## 1. Basic Operations
+## Installation
 
-Encode a token: python main.py encode --payload '{"user":"admin"}' --secret "supersecret" --alg HS256
+### Prerequisites
+- Python 3.8 or higher
+- Virtualenv (recommended)
 
-Decode and verify: python main.py decode <TOKEN> --secret "supersecret"
-## 2. Security Testing
+### Setup
+Clone the repository and execute the provided setup script:
 
-Scan a token for vulnerabilities: python main.py scan <TOKEN> --url http://api.target.com/protected
+```bash
+git clone [https://github.com/mrblue223/JWTrike.git](https://github.com/mrblue223/JWTrike.git)
+cd JWTrike
+chmod +x setup.sh
+./setup.sh
+```
+### Activate Environment
 
-Crack a weak HMAC secret: python main.py crack <TOKEN> --wordlist common_passwords.txt
-## 3. Attack Payload Generation
+```bash
+source jwt-env/bin/activate
+```
 
-Generate a list of malicious tokens to test server-side parsing:
-Test for none algorithm vulnerability
+## Usage Guide
+JWTrike utilizies a sub-command structure for granular contro.
 
-python main.py payload --attack none
-Test for KID header SQL injection
+1. Token Operations
+Encode a token with a specific claims:
 
+```bash
+python main.py encode --payload '{"user":"admin"}' --secret "supersecret" --alg HS256
+```
+
+Decode ans inspect a token:
+```bash
+python main.py decode <TOKEN> --secret "supersecret"
+```
+
+2. Security Assessments
+Scan a live endpoint for JWT misconfigurations:
+
+```bash
+python main.py scan <TOKEN> --url [http://api.target.internal/protected](http://api.target.internal/protected)
+```
+Launch a dictionary attack againts an HMAC secret:
+
+```bash
+python main.py crack <TOKEN> --wordlist wordlists/common_secrets.txt
+```
+
+3. Payload Generation
+Generate tokens for specific attack vectors:
+```bash
+# Test for Key ID (KID) SQL Injection
 python main.py payload --attack kid_sql
-## 4. Server Modes
 
-Start the REST API: python main.py server --port 3000
+# Test for Algorithm Confusion (RS256 to HS256)
+python main.py payload --attack alg_confusion
+```
+4. Integration Modes
+Start the REST API for remote automation:
+```bash
+python main.py server --port 3000
+```
+Start the MCP Server for AI-assisted auditing:
+```bash
+python main.py mcp
+```
 
-Start the MCP Server (for AI agents): python main.py mcp
-# 📂 Project Structure
+## Project Structure
+        JWTrike/
+        ├── main.py              # CLI Entry point
+        ├── requirements.txt     # Dependency manifest
+        ├── setup.sh             # Installation script
+        ├── core/                # Logic engine
+        │   ├── cracker.py
+        │   ├── decoder.py
+        │   ├── encoder.py
+        │   ├── scanner.py
+        │   ├── server.py
+        │   └── mcp_server.py
+        └── utils/               # Constants and helpers
+            ├── constants.py
+            └── helpers.py
 
-    main.py: Main entry point and CLI handler.
+## Disclaimer
 
-    core/:
-
-        encoder.py / decoder.py: Token processing logic.
-
-        scanner.py: Vulnerability detection engine.
-
-        payloads.py: Attack vector generation.
-
-        server.py: Flask REST API implementation.
-
-        mcp_server.py: Model Context Protocol implementation.
-
-    utils/:
-
-        helpers.py: Utility functions for Base64 and JSON handling.
-
-        constants.py: Supported algorithms and vulnerability definitions.
-
-# ⚠️ Disclaimer
-
-This tool is intended for legal security testing and educational purposes only. Always obtain explicit permission before testing against any third-party systems. The authors are not responsible for any misuse or damage caused by this tool.
+This tool is intended for **authorized security testing and educational purposes only.** Unauthorized use of this tool against systems without prior written consent is illegal. The developers assume no liability for misuse or damage caused by this software.
